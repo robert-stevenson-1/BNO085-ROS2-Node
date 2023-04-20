@@ -129,6 +129,6 @@ dmypy.json
 .pyre/
 
 #ROS Build Package files
-./build/*
-./install/*
-./log/*
+build/
+install/
+log/
