@@ -118,8 +118,9 @@ def main(args=None):
         bno_publisher = BNO085_Publisher()
     
         rclpy.spin(bno_publisher)
-    except:
-        pass
+    except Exception as e: 
+        rclpy.get_logger().error(e)
+        print(e)
 
     rclpy.shutdown()
 
