@@ -1,8 +1,6 @@
 import time
-import board
 from math import atan2, sqrt
 from math import pi as PI
-#import busio
 from adafruit_extended_bus import ExtendedI2C as I2C
 import adafruit_bno08x
 from adafruit_bno08x.i2c import BNO08X_I2C
