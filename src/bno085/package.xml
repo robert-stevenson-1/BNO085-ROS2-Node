@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>bno085</name>
-  <version>0.0.0</version>
+  <version>1.0.0</version>
   <description>ROS2 Node for interface via I2C with a BNO085 Sensor and publish the IMU msg data and the Sensor orientation (roll, pitch, yaw/heading) </description>
   <maintainer email="robertlstevenson01@gmail.com">Robert</maintainer>
   <license>MIT</license>

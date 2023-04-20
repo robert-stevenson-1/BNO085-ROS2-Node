@@ -24,12 +24,12 @@ class BNO085_Publisher(Node):
         # create the publisher for the IMU data
         self.imu_data_publisher = self.create_publisher(
             Imu, # ROS Message
-            'IMU Data',  # Topic
+            'IMU_Data',  # Topic
             10)
         # create the publisher for the Robots Orientation data
         self.robot_orientation_publisher  = self.create_publisher(
             Vector3, # ROS Message
-            'IMU Data', # Topic
+            'Robot_Euler_Orientation', # Topic
             10)
         
         # IMU sensor (BNO085)
@@ -45,7 +45,8 @@ class BNO085_Publisher(Node):
             self.imu = BNO08X_I2C(i2c)
         except:
             self.get_logger().error('Failed to connect to BNO085 via I2C...')
-            Exception('Failed to connect to BNO085 via I2')
+            raise Exception('Failed to connect to BNO085 via I2')
+            
 
         # enable the reports from the IMU
         self.imu.enable_feature(adafruit_bno08x.BNO_REPORT_ROTATION_VECTOR) # For orientation_quat and Euler (heading) data
@@ -62,7 +63,7 @@ class BNO085_Publisher(Node):
         # get the quaternion representation of the robot's orientation
         orientation_quat[0], orientation_quat[1], orientation_quat[2], orientation_quat[3] = self.imu.quaternion
         # calculate the euler representation of the robot's orientation
-        self.calc_euler_angles_deg()
+        self.__calc_euler_angles_deg()
 
         #create messages to publish
         imu_data_msg = Imu()
@@ -89,7 +90,7 @@ class BNO085_Publisher(Node):
         self.imu_data_publisher.publish(imu_data_msg)
         self.robot_orientation_publisher.publish(robot_ori_euler_msg)
 
-    def calc_euler_orientation_angles_rad():
+    def __calc_euler_orientation_angles_rad(self):
         # calc the roll (x-axis rotation)
         sinr_cosp = 2 * (orientation_quat[3] * orientation_quat[0] + orientation_quat[1] * orientation_quat[2])
         cosr_cosp = 1 - 2 * (orientation_quat[0] * orientation_quat[0] + orientation_quat[1] * orientation_quat[1])
@@ -105,8 +106,8 @@ class BNO085_Publisher(Node):
         cosy_cosp = 1 - 2 * (orientation_quat[1] * orientation_quat[1] + orientation_quat[2] * orientation_quat[2])
         orientation_rad[2] = atan2(siny_cosp, cosy_cosp)
             
-    def calc_euler_angles_deg():
-        calc_euler_orientation_angles_rad();
+    def __calc_euler_angles_deg(self):
+        self.__calc_euler_orientation_angles_rad()
         orientation_deg[0] = orientation_rad[0] * (180/PI)
         orientation_deg[1] = orientation_rad[1] * (180/PI)
         orientation_deg[2] = 360 - (180 + orientation_rad[2] * (180/PI))
@@ -116,11 +117,12 @@ def main(args=None):
     rclpy.init(args=args)
     try:
         bno_publisher = BNO085_Publisher()
-    
         rclpy.spin(bno_publisher)
+        bno_publisher.destroy_node()
     except Exception as e: 
-        rclpy.get_logger().error(e)
         print(e)
+    except KeyboardInterrupt:
+        pass
 
     rclpy.shutdown()
 
