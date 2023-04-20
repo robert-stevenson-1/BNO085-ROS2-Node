@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'BNO085'
+package_name = 'bno085'
 
 setup(
     name=package_name,
