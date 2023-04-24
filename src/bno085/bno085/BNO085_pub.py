@@ -86,6 +86,19 @@ class BNO085_Publisher(Node):
         robot_ori_euler_msg.x = orientation_deg[0] # roll
         robot_ori_euler_msg.y = orientation_deg[1] # pitch
         robot_ori_euler_msg.z = orientation_deg[2] # yaw
+        
+        #TODO: Look into getting the IMU's Covariance values
+        # Following the recommendation here: https://robotics.stackexchange.com/questions/22756/what-would-be-a-way-to-estimate-imu-noise-covariance-matrix
+        # we set the covariance values to a small values (just in case they are needed) on the diagonal
+        # imu_data_msg.orientation_covariance[0] = 0.01
+        # imu_data_msg.orientation_covariance[4] = 0.01
+        # imu_data_msg.orientation_covariance[8] = 0.01
+        # imu_data_msg.angular_velocity_covariance[0] = 0.01
+        # imu_data_msg.angular_velocity_covariance[4] = 0.01
+        # imu_data_msg.angular_velocity_covariance[8] = 0.01
+        # imu_data_msg.linear_acceleration_covariance[0] = 0.01
+        # imu_data_msg.linear_acceleration_covariance[4] = 0.01
+        # imu_data_msg.linear_acceleration_covariance[8] = 0.01
 
         self.imu_data_publisher.publish(imu_data_msg)
         self.robot_orientation_publisher.publish(robot_ori_euler_msg)
