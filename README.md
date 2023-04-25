@@ -2,6 +2,8 @@
 A ROS2 Compatible node that interfaces with the BNO085 IMU sensor via python
 
 ## Requirements
+**TODO: Added Requirements.txt**
+
 The node communicates with the BNO08x via i2c on the Raspberry Pi and Python.
 The required software/libraries to run this code:
 - [Adafruit_CircuitPython_BNO08x](https://github.com/adafruit/Adafruit_CircuitPython_BNO08x)
