@@ -133,7 +133,10 @@ def main(args=None):
         rclpy.spin(bno_publisher)
         bno_publisher.destroy_node()
     except Exception as e: 
-        print(e)
+        print(orientation_quat)
+        print("------------------")
+        print(traceback.format_exec())
+        #print(e)
     except KeyboardInterrupt:
         pass
 
