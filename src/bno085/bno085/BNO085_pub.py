@@ -123,7 +123,7 @@ class BNO085_Publisher(Node):
         self.__calc_euler_orientation_angles_rad()
         orientation_deg[0] = orientation_rad[0] * (180/PI)
         orientation_deg[1] = orientation_rad[1] * (180/PI)
-        orientation_deg[2] = 360 - (180 + orientation_rad[2] * (180/PI))
+        orientation_deg[2] = 360 - (orientation_rad[2] * (180/PI))
 
 
 def main(args=None):
@@ -133,7 +133,10 @@ def main(args=None):
         rclpy.spin(bno_publisher)
         bno_publisher.destroy_node()
     except Exception as e: 
-        print(e)
+        print(orientation_quat)
+        print("------------------")
+        print(traceback.format_exec())
+        #print(e)
     except KeyboardInterrupt:
         pass
 
