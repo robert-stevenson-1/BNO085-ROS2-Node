@@ -67,6 +67,9 @@ class BNO085_Publisher(Node):
 
         #create messages to publish
         imu_data_msg = Imu()
+        # Set timestamp
+        imu_data_msg.header.stamp = self.get_clock().now().to_msg()
+        imu_data_msg.header.frame_id = "imu_link"
         robot_ori_euler_msg = Vector3()
 
         # TODO: Double check that this is true
